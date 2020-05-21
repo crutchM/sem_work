@@ -27,3 +27,17 @@ C:\Users\А\Downloads\OsuStart\Canvas\Canvas\obj\Debug\Canvas.Properties.Resourc
 C:\Users\А\Downloads\OsuStart\Canvas\Canvas\obj\Debug\Canvas.csproj.GenerateResource.cache
 C:\Users\А\Downloads\OsuStart\Canvas\Canvas\obj\Debug\Canvas.exe
 C:\Users\А\Downloads\OsuStart\Canvas\Canvas\obj\Debug\Canvas.pdb
+C:\myachik\sem_work\Canvas\Canvas\bin\Debug\Canvas.exe.config
+C:\myachik\sem_work\Canvas\Canvas\bin\Debug\Canvas.exe
+C:\myachik\sem_work\Canvas\Canvas\bin\Debug\Canvas.pdb
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.csprojAssemblyReference.cache
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\MainWindow.g.cs
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\App.g.cs
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas_MarkupCompile.cache
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas_MarkupCompile.lref
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\MainWindow.baml
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.g.resources
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.Properties.Resources.resources
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.csproj.GenerateResource.cache
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.exe
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.pdb

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\А\AppData\local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\А\AppData\local\JetBrains\Rider2020.1\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_Canvas.-1989685605.00" t="ExcludeRecursive" />
-    <e p="C:\Users\А\Downloads\OsuStart\Canvas" t="IncludeFlat">
+    <e p="C:\myachik\sem_work\Canvas" t="IncludeFlat">
       <e p="Canvas" t="IncludeRecursive">
         <e p="App.config" t="Include" />
         <e p="App.xaml" t="Include" />
         <e p="App.xaml.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Canvas.csproj" t="IncludeRecursive" />
+        <e p="LevelPoints.cs" t="Include" />
         <e p="MainWindow.xaml" t="Include" />
         <e p="MainWindow.xaml.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
@@ -23,9 +22,12 @@
           <e p="Resources.Designer.cs" t="Include" />
           <e p="Resources.resx" t="Include" />
         </e>
+        <e p="Sliders.cs" t="Include" />
       </e>
       <e p="Canvas.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />
     </e>
+    <e p="C:\Users\А\AppData\local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\А\AppData\local\JetBrains\Rider2020.1\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_Canvas.1772817518.00" t="ExcludeRecursive" />
   </component>
 </project>

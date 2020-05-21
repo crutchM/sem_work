@@ -35,7 +35,7 @@ namespace Canvas
                   //  if (playerHealth <= 0)
                     //    MessageBox.Show("чекай мать");
                 //};
-            foreach (var point in new LevelPoints("points.txt"))
+            foreach (var point in new LevelPoints("points2.txt"))
             {
                 
                 switch ((PointType) point.Item1)

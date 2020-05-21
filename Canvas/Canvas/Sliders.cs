@@ -7,7 +7,9 @@ namespace Canvas
 {
     public class Sliders
     {
-        private static MainWindow mw;
+        private bool isMpusePressed;  
+            
+        private MainWindow mw;
 
         public Sliders(MainWindow m)
         {
@@ -34,53 +36,59 @@ namespace Canvas
                 Height = 50,
                 Stroke = Brushes.Black,
                 StrokeThickness = 6,
-                Fill = Brushes.Black
+                Fill = Brushes.Blue
             };
-
-            /*slider.MouseLeftButtonDown += (sender, args) =>
-            {
-               
-            };*/
+            slider.MouseLeftButtonDown += (sender, args) =>
+                isMpusePressed = true;
+            slider.MouseLeftButtonUp += (sender, args) =>
+                isMpusePressed = false;
             slider.MouseMove += (sender, args) =>
             {
-                /*bool timeFlag = true;
-                invalidate.Interval = TimeSpan.FromMilliseconds(deathTime);
-                */
+                
+                if (isMpusePressed)
+                    switch (type)
+                    {
+                        case 0:
+                            canvas.SetLeft(slider, args.GetPosition(null).X - 25);
+                            canvas.SetTop(slider, pointY);
 
-                switch (type)
+                            break;
+                        case 1:
+                            canvas.SetLeft(slider, pointY);
+                            canvas.SetTop(slider, args.GetPosition(null).Y);
+                            break;
+                        case 2:
+                            canvas.SetLeft(slider, args.GetPosition(null).X);
+                            canvas.SetTop(slider, args.GetPosition(null).Y);
+                            break;
+                    }
+                if (Math.Abs(canvas.GetLeft(slider) - canvas.GetLeft(target)) < 1)
                 {
-                    case 0:
-                        canvas.SetLeft(slider, args.GetPosition(null).X);
-                        canvas.SetTop(slider, pointY);
-                    
-                        break;
-                    case 1:
-                        canvas.SetLeft(slider, pointY);
-                        canvas.SetTop(slider, args.GetPosition(null).Y);
-                        break;
-                    case 2:
-                        canvas.SetLeft(slider, args.GetPosition(null).X);
-                        canvas.SetTop(slider, args.GetPosition(null).Y);
-                        break;
-                }
-
-                /*invalidate.Tick += (o, eventArgs) =>
-                {
-                    timeFlag = false;
                     mw.Canva.Children.Remove(target);
-                    mw.changeHealth(mw.healthBar, -20);
-                    invalidate.Stop();
-                };*/
+                    mw.Canva.Children.Remove(slider);
+                    mw.changeHealth(mw.healthBar, 10);
+                    mw.upScore(mw.tb, 500);
+                }
             };
             determinate.Interval = TimeSpan.FromMilliseconds(delayTime);
             determinate.Tick += (o, e) => {
                 mw.Canva.Children.Add(target);
                 mw.Canva.Children.Add(slider);
                 canvas.SetLeft(target, pointX + deltaX);
-                canvas.SetTop(target, pointY + deltaX);
+                canvas.SetTop(target, pointY);
                 canvas.SetLeft(slider, pointX);
                 canvas.SetTop(slider, pointY);
                 determinate.Stop();
+                invalidate.Start();
+            };
+            determinate.Start();
+            invalidate.Interval = TimeSpan.FromMilliseconds(deathTime);
+            invalidate.Tick += (o, eventArgs) =>
+            {
+                mw.Canva.Children.Remove(target);
+                mw.Canva.Children.Remove(slider);
+                mw.changeHealth(mw.healthBar, -20);
+                invalidate.Stop();
             };
         }
     }

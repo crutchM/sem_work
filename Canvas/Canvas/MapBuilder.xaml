@@ -1,0 +1,32 @@
+﻿<Window x:Class="OSU.MapBuilder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OSU"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525"
+        KeyDown="Canva_OnKeyDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Name="FileNameForm">Filename</TextBox>
+                <TextBlock>Choose type: </TextBlock>
+                <ComboBox Name="EntityType">
+                    <ComboBoxItem>Point</ComboBoxItem>
+                    <ComboBoxItem>Slider Horizontal</ComboBoxItem>
+                    <ComboBoxItem>Slider Vertical</ComboBoxItem>
+                    <ComboBoxItem>Slider Sin</ComboBoxItem>
+                    <ComboBoxItem>Slider Log10</ComboBoxItem>
+                </ComboBox>
+                <Button Name="SaveButton">Save</Button>
+                <TextBlock Name="RecordingShield">Press [R] to start and stop recording</TextBlock>
+            </StackPanel>
+        </Grid>
+        <Canvas Name="Canva" Background="Black" Grid.Row="1"/>
+    </Grid>
+</Window>

@@ -1,4 +1,4 @@
-﻿namespace Canvas
+﻿namespace OSU
 {
     /// <summary>
     /// Interaction logic for App.xaml

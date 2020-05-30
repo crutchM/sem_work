@@ -1,26 +1,26 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using canvas = System.Windows.Controls.Canvas;
-namespace Canvas
+namespace OSU
 {
     public class Sliders
     {
-        private bool isMpusePressed;  
-            
+        private bool isMousePressed;  
         private MainWindow mw;
-
+        private double constY = 50;
         public Sliders(MainWindow m)
         {
             mw = m;
         }
 
-        public void MakeSlider(int delayTime, int pointX, int pointY, int deltaX, int type, int deathTime)
+        public void MakeSlider(int delayTime, int pointX, int pointY, int deltaX, int deltaY, int type, int deathTime)
         {
             DispatcherTimer determinate = new DispatcherTimer();
             DispatcherTimer invalidate = new DispatcherTimer();
-
             Ellipse slider = new Ellipse()
             {
                 Width = 50,
@@ -39,27 +39,30 @@ namespace Canvas
                 Fill = Brushes.Blue
             };
             slider.MouseLeftButtonDown += (sender, args) =>
-                isMpusePressed = true;
+                isMousePressed = true;
             slider.MouseLeftButtonUp += (sender, args) =>
-                isMpusePressed = false;
+                isMousePressed = false;
             slider.MouseMove += (sender, args) =>
             {
                 
-                if (isMpusePressed)
+                if (isMousePressed)
                     switch (type)
                     {
                         case 0:
-                            canvas.SetLeft(slider, args.GetPosition(null).X - 25);
-                            canvas.SetTop(slider, pointY);
-
+                            if(IsOutOfRange(slider, pointX, pointY, deltaX, deltaY, 0))
+                                MoveSlider(slider, args.GetPosition(null).X - 25, pointY);
+                            else MoveSlider(slider, pointX, pointY); 
                             break;
                         case 1:
-                            canvas.SetLeft(slider, pointY);
-                            canvas.SetTop(slider, args.GetPosition(null).Y);
+                            if(IsOutOfRange(slider, pointX, pointY, deltaX, deltaY, 1))
+                                MoveSlider(slider, pointX, args.GetPosition(null).Y - 25);
+                            else MoveSlider(slider, pointX, pointY);
                             break;
                         case 2:
-                            canvas.SetLeft(slider, args.GetPosition(null).X);
-                            canvas.SetTop(slider, args.GetPosition(null).Y);
+                            if (IsOutOfRange(slider, pointX, pointY, deltaX, deltaY, 0))
+                                MoveSlider(slider, args.GetPosition(null).X - 25, 
+                                    canvas.GetTop(target) - constY * Math.Sin((args.GetPosition(null).X - pointX) / deltaX * Math.PI) + 25);
+                            else MoveSlider(slider, pointX, pointY);
                             break;
                     }
                 if (Math.Abs(canvas.GetLeft(slider) - canvas.GetLeft(target)) < 1)
@@ -70,17 +73,19 @@ namespace Canvas
                     mw.upScore(mw.tb, 500);
                 }
             };
+            
             determinate.Interval = TimeSpan.FromMilliseconds(delayTime);
             determinate.Tick += (o, e) => {
                 mw.Canva.Children.Add(target);
                 mw.Canva.Children.Add(slider);
                 canvas.SetLeft(target, pointX + deltaX);
-                canvas.SetTop(target, pointY);
+                canvas.SetTop(target, pointY + deltaY);
                 canvas.SetLeft(slider, pointX);
-                canvas.SetTop(slider, pointY);
+                canvas.SetTop(slider, canvas.GetTop(target));
                 determinate.Stop();
                 invalidate.Start();
             };
+            
             determinate.Start();
             invalidate.Interval = TimeSpan.FromMilliseconds(deathTime);
             invalidate.Tick += (o, eventArgs) =>
@@ -90,6 +95,32 @@ namespace Canvas
                 mw.changeHealth(mw.healthBar, -20);
                 invalidate.Stop();
             };
+        }
+
+        private bool IsOutOfRange (Ellipse slider, double pointX, double pointY,  double dX, double dY, int type)
+        {
+            bool isOutOfRange = false;
+            switch (type)
+            {
+                case 0:
+                    if (dX > 0)
+                        isOutOfRange = (Canvas.GetLeft(slider) >= pointX);
+                    else isOutOfRange = (Canvas.GetLeft(slider) <= pointX);
+                    break;
+                case 1:
+                    if (dY > 0)
+                        isOutOfRange = (Canvas.GetTop(slider) >= pointY);
+                    else isOutOfRange = (Canvas.GetTop(slider) <= pointY);
+                    break;
+            }
+
+            return isOutOfRange;
+        }
+
+        private void MoveSlider(Ellipse slider, double posX, double posY)
+        {
+            Canvas.SetLeft(slider, posX);
+            Canvas.SetTop(slider, posY);
         }
     }
 }

@@ -50,7 +50,6 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
-        <Compile Include="Sliders.cs" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -59,13 +58,20 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Include="elements\Dot.cs" />
+        <Compile Include="elements\Sliders.cs" />
+        <Compile Include="elements\Spinner.cs" />
         <Compile Include="LevelPoints.cs" />
         <Compile Include="MainWindow.xaml.cs">
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="MapBuilder.xaml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="MapBuilder.xaml.cs">
+          <DependentUpon>MapBuilder.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Properties\AssemblyInfo.cs">
             <SubType>Code</SubType>
         </Compile>

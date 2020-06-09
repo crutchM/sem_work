@@ -43,3 +43,4 @@ C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.exe
 C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.pdb
 C:\myachik\sem_work\Canvas\Canvas\obj\Debug\MapBuilder.g.cs
 C:\myachik\sem_work\Canvas\Canvas\obj\Debug\MapBuilder.baml
+C:\myachik\sem_work\Canvas\Canvas\obj\Debug\Canvas.csproj.CoreCompileInputs.cache

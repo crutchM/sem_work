@@ -7,37 +7,56 @@ using System.Windows.Threading;
 using canvas = System.Windows.Controls.Canvas;
 namespace OSU
 {
-    public class Sliders
+    public class Sliders: IElement
     {
+        public int PosX { get; }
+        public int PosY { get; }
+        public int DelayTime { get; }
+        public int DeathTime { get; }
+        public int Dx { get; }
+        public int Dy { get; }
+
+        public int Type { get; }
         private bool isMousePressed;  
         private MainWindow mw;
         private double constY = 50;
-        public Sliders(MainWindow m)
+        private Ellipse slider = new Ellipse()                               
+                {
+                    Width = 50,
+                    Height = 50,
+                    Stroke = Brushes.White,
+                    StrokeThickness = 6,
+                    Fill = Brushes.Green
+                    
+                };
+        private  Ellipse target = new Ellipse()                                
+                {
+                    Width = 50,
+                    Height = 50,
+                    Stroke = Brushes.White,
+                    StrokeThickness = 6,
+                    Fill = Brushes.Black
+                };
+        public Sliders(MainWindow m, int pX, int pY, int dT, int deT, int delX, int delY, int type)
         {
+            Type = type;
+            PosX = pX;
+            PosY = pY;
+            DelayTime = dT;
+            DeathTime = deT;
+            Dx = delX;
+            Dy = delY;
             mw = m;
         }
 
-        public void MakeSlider(int delayTime, int pointX, int pointY, int deltaX, int deltaY, int type, int deathTime)
+        private void MakeSlider(int type)
         {
-            DispatcherTimer determinate = new DispatcherTimer();
-            DispatcherTimer invalidate = new DispatcherTimer();
-            Ellipse slider = new Ellipse()
-            {
-                Width = 50,
-                Height = 50,
-                Stroke = Brushes.White,
-                StrokeThickness = 6,
-                Fill = Brushes.Green
-            };
-
-            Ellipse target = new Ellipse()
-            {
-                Width = 50,
-                Height = 50,
-                Stroke = Brushes.Black,
-                StrokeThickness = 6,
-                Fill = Brushes.Blue
-            };
+            mw.Canva.Children.Add(slider);
+            mw.Canva.Children.Add(target);
+            canvas.SetLeft(slider, PosX);
+            canvas.SetTop(slider, PosY);
+            canvas.SetLeft(target, PosX + Dx);
+            canvas.SetTop(target, PosY + Dy);
             slider.MouseLeftButtonDown += (sender, args) =>
                 isMousePressed = true;
             slider.MouseLeftButtonUp += (sender, args) =>
@@ -49,52 +68,34 @@ namespace OSU
                     switch (type)
                     {
                         case 0:
-                            if(IsOutOfRange(slider, pointX, pointY, deltaX, deltaY, 0))
-                                MoveSlider(slider, args.GetPosition(null).X - 25, pointY);
-                            else MoveSlider(slider, pointX, pointY); 
+                            if (IsOutOfRange(slider, PosX, PosY, Dx, Dy, 0))
+                                MoveSlider(slider, args.GetPosition(null).X - 25, PosY);
+                            else MoveSlider(slider, PosX, PosY);
                             break;
                         case 1:
-                            if(IsOutOfRange(slider, pointX, pointY, deltaX, deltaY, 1))
-                                MoveSlider(slider, pointX, args.GetPosition(null).Y - 25);
-                            else MoveSlider(slider, pointX, pointY);
+                            if (IsOutOfRange(slider, PosX, PosY, Dx, Dy, 1))
+                                MoveSlider(slider, PosX, args.GetPosition(null).Y - 25);
+                            else MoveSlider(slider, PosX, PosY);
                             break;
                         case 2:
-                            if (IsOutOfRange(slider, pointX, pointY, deltaX, deltaY, 0))
+                            if (IsOutOfRange(slider, PosX, PosY, Dx, Dy, 0))
                                 MoveSlider(slider, args.GetPosition(null).X - 25, 
-                                    canvas.GetTop(target) - constY * Math.Sin((args.GetPosition(null).X - pointX) / deltaX * Math.PI) + 25);
-                            else MoveSlider(slider, pointX, pointY);
+                            canvas.GetTop(target) - constY * Math.Sin((args.GetPosition(null).X - PosX) / Dx * Math.PI));
+                            else MoveSlider(slider, PosX, PosY);
                             break;
                     }
-                if (Math.Abs(canvas.GetLeft(slider) - canvas.GetLeft(target)) < 1)
+            };
+            target.MouseEnter += (o, eventArgs) =>
+            {
+                if (isMousePressed)
                 {
                     mw.Canva.Children.Remove(target);
                     mw.Canva.Children.Remove(slider);
-                    mw.changeHealth(mw.healthBar, 10);
-                    mw.upScore(mw.tb, 500);
+                    mw.ChangeHealth(mw.HealthBar, 10);
+                    mw.UpScore(mw.Tb, 500);
                 }
             };
-            
-            determinate.Interval = TimeSpan.FromMilliseconds(delayTime);
-            determinate.Tick += (o, e) => {
-                mw.Canva.Children.Add(target);
-                mw.Canva.Children.Add(slider);
-                canvas.SetLeft(target, pointX + deltaX);
-                canvas.SetTop(target, pointY + deltaY);
-                canvas.SetLeft(slider, pointX);
-                canvas.SetTop(slider, canvas.GetTop(target));
-                determinate.Stop();
-                invalidate.Start();
-            };
-            
-            determinate.Start();
-            invalidate.Interval = TimeSpan.FromMilliseconds(deathTime);
-            invalidate.Tick += (o, eventArgs) =>
-            {
-                mw.Canva.Children.Remove(target);
-                mw.Canva.Children.Remove(slider);
-                mw.changeHealth(mw.healthBar, -20);
-                invalidate.Stop();
-            };
+                
         }
 
         private bool IsOutOfRange (Ellipse slider, double pointX, double pointY,  double dX, double dY, int type)
@@ -121,6 +122,16 @@ namespace OSU
         {
             Canvas.SetLeft(slider, posX);
             Canvas.SetTop(slider, posY);
+        }
+
+        public void Show()
+            => MakeSlider(Type);    
+
+        public void Remove()
+        {
+            mw.Canva.Children.Remove(target);                        
+            mw.Canva.Children.Remove(slider);
+            mw.ChangeHealth(mw.HealthBar, -20);
         }
     }
 }

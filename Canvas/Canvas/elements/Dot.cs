@@ -6,49 +6,55 @@ using canvas = System.Windows.Controls.Canvas;
 
 namespace OSU
 {
-    public class Dot
+    public class Dot : IElement
     {
         private MainWindow _mainWindow;
+        public int PosX { get; }
+        public int PosY { get; }
+        public int DelayTime { get; }
+        public int DeathTime { get; }
+        
+        private Ellipse target = new Ellipse()                                         
+                {
+                    Width = 50,
+                    Height = 50,
+                    Stroke = Brushes.Cyan,
+                    StrokeThickness = 6,//
+                    Fill = Brushes.Black
+                };
 
-        public Dot(MainWindow m)
+        public Dot(MainWindow m, int pX, int pY, int dT, int deT)
         {
+            PosX = pX;
+            PosY = pY;
+            DelayTime = dT;
+            DeathTime = deT;
             _mainWindow = m;
         }
 
-        public void MakeDot(int posX, int posY, int delayTime, int deathTime)
+        private void MakeDot()
         {
-            DispatcherTimer determinate = new DispatcherTimer();
-            DispatcherTimer invalidate = new DispatcherTimer();
-
-            Ellipse target = new Ellipse()
-            {
-                Width = 50,
-                Height = 50,
-                Stroke = Brushes.White,
-                StrokeThickness = 6,
-                Fill = Brushes.Black
-            };
             target.MouseLeftButtonDown += (sender, args) =>
             {
-                _mainWindow.upScore(_mainWindow.tb, 500);
+                _mainWindow.UpScore(_mainWindow.Tb, 500);
                 _mainWindow.Canva.Children.Remove(target); 
-                _mainWindow.changeHealth(_mainWindow.healthBar, 10);
+                _mainWindow.ChangeHealth(_mainWindow.HealthBar, 10);
             };
-            determinate.Interval = TimeSpan.FromMilliseconds(delayTime);
-            determinate.Tick += (o, e) => {
-                _mainWindow.Canva.Children.Add(target);
-                canvas.SetLeft(target, posX);
-                canvas.SetTop(target, posY);
-                invalidate.Start();
-                determinate.Stop();
-            };
-            determinate.Start();
-            invalidate.Interval = TimeSpan.FromMilliseconds(deathTime);
-            invalidate.Tick += (o, e) => {
-                _mainWindow.Canva.Children.Remove(target);
-                _mainWindow.changeHealth(_mainWindow.healthBar, -20);
-                invalidate.Stop();
-            };
+            _mainWindow.Canva.Children.Add(target);
+            canvas.SetLeft(target, PosX);
+            canvas.SetTop(target, PosY);
+        }
+
+        
+
+        public void Show() =>
+            MakeDot(); 
+        
+        public void Remove()
+        {
+            _mainWindow.Canva.Children.Remove(target);                            
+            _mainWindow.ChangeHealth(_mainWindow.HealthBar, -20);
+            
         }
     }
 }

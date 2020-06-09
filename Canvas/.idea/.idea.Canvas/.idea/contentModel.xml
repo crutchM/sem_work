@@ -13,6 +13,7 @@
           <e p="Sliders.cs" t="Include" />
           <e p="Spinner.cs" t="Include" />
         </e>
+        <e p="IElement.cs" t="Include" />
         <e p="LevelPoints.cs" t="Include" />
         <e p="MainWindow.xaml" t="Include" />
         <e p="MainWindow.xaml.cs" t="Include" />

@@ -13,7 +13,6 @@ namespace OSU
         public static string musicPath { get; private set; }
         public static string backgroundPath { get; private set; }
         private StreamReader sr;
-
         public LevelPoints(string fileName)
         {
             this.filePath = fileName;
@@ -47,10 +46,10 @@ namespace OSU
             {
                 if(line[0] == '#') continue;
                 string[] values = line.Split(';');
-                if (values[0] == "mp"){ musicPath = values[1]; continue;}
-                if (values[0] == "bp"){ backgroundPath = values[1]; continue;}
+                if (values[0] == "mp"){ musicPath = values[1]; continue;} //
+                if (values[0] == "bp"){ backgroundPath = values[1]; continue;}//
                 if(int.TryParse(values[0], out int type)
-                   && int.TryParse(values[1], out int x)
+                   && int.TryParse(values[1], out  int x)
                    && int.TryParse(values[2], out int y)
                    && int.TryParse(values[3], out int when)
                    && int.TryParse(values[4], out int duration)
